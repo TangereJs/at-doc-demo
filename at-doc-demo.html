@@ -1,0 +1,103 @@
+<link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../at-core-theme/at-core-theme.html">
+<link rel="import" href="../at-core-form/at-core-form.html">
+
+<dom-module id="at-doc-demo">
+  <style>
+
+  </style>
+  <template>
+    <div class="horizontal layout">
+      <div class="vertical layout flex-6">
+        <at-core-form id="coreForm"></at-core-form>
+      </div>
+      <div id="insertPoint" class="vertical layout flex-6">
+
+      </div>
+    </div>
+  </template>
+  <script>
+    'use strict';
+    Polymer({
+      is: 'at-doc-demo',
+      properties: {
+        url: {
+          type: String,
+          value: '',
+          observer: 'urlChanged'
+        },
+        auto: {
+          type: String,
+          value: false
+        }
+      },
+      _scopeCssViaAttr: true,
+      ready: function() {
+        if (this.auto && this.url === '') {
+          // autogenerate the url
+          var url = window.location.href;
+          if (url.indexOf("index.html") !== -1) {
+            var urlParts = url.split("/");
+            if (urlParts.length > 2) {
+              var componentName = urlParts[urlParts.length - 2];
+              self.url = componentName + '.html';
+            }
+          }
+        }
+      },
+      urlChanged: function (newValue, oldValue) {
+        var insertPoint = this.$.insertPoint;
+        var coreForm = this.$.coreForm;
+        if (newValue !== '') {
+          this.importHref(this.url, function (event) {
+            // import successful
+            var importedContent = event.target.import;
+            var domModule = importedContent.querySelector('dom-module');
+            var elementName = domModule.getAttribute('id');
+            var element = document.createElement(elementName);
+            element.label = elementName + ' demo';
+            Polymer.dom(insertPoint).appendChild(element);
+            // generate jsonSchema from properties
+            var
+              properties = element.properties,
+              propDef,
+              schema = {
+                title: elementName,
+                description: 'Demo form for ' + elementName,
+                properties:{}
+              },
+              data = {},
+              propSchemaDef = {};
+
+            Object.keys(properties).forEach(function (name, index) {
+              propDef = properties[name];
+              schema.properties[name] = propSchemaDef = {};
+              propSchemaDef.title = name;
+              propSchemaDef.type = typeof propDef.type();
+              data[name] = propDef.value;
+              if (name === 'label' && propDef.value === '') {
+                data[name] = element.label;
+              }
+            });
+            coreForm.schema = schema;
+            coreForm.data = data;
+            coreForm.removeEventListener('data-changed', _data_changed);
+            coreForm.addEventListener('data-changed', _data_changed);
+
+            function _data_changed(event) {
+              var value = event.detail.value;
+              Object.keys(value).forEach(function (name, index) {
+                try {
+                  element[name] = value[name];
+                } catch (e) {}
+              });
+            }
+
+          }, function (event) {
+            // failure
+          });
+        }
+      }
+    });
+  </script>
+</dom-module>
