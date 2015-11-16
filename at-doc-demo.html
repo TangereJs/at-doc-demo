@@ -27,29 +27,29 @@
           observer: 'urlChanged'
         },
         auto: {
-          type: String,
+          type: Boolean,
           value: false
         }
       },
       _scopeCssViaAttr: true,
       ready: function() {
+
         if (this.auto && this.url === '') {
           // autogenerate the url
           var url = window.location.href;
-          if (url.indexOf("index.html") !== -1) {
-            var urlParts = url.split("/");
-            if (urlParts.length > 2) {
-              var componentName = urlParts[urlParts.length - 2];
-              self.url = componentName + '.html';
-            }
+          var urlParts = url.split("/");
+          if (urlParts.length > 2) {
+            var componentName = urlParts[urlParts.length - 2];
+            var newUrl = componentName + '.html';
+            this.url = newUrl;
           }
         }
       },
-      urlChanged: function (newValue, oldValue) {
+      urlChanged: function(newValue, oldValue) {
         var insertPoint = this.$.insertPoint;
         var coreForm = this.$.coreForm;
         if (newValue !== '') {
-          this.importHref(this.url, function (event) {
+          this.importHref(this.url, function(event) {
             // import successful
             var importedContent = event.target.import;
             var domModule = importedContent.querySelector('dom-module');
@@ -64,12 +64,12 @@
               schema = {
                 title: elementName,
                 description: 'Demo form for ' + elementName,
-                properties:{}
+                properties: {}
               },
               data = {},
               propSchemaDef = {};
 
-            Object.keys(properties).forEach(function (name, index) {
+            Object.keys(properties).forEach(function(name, index) {
               propDef = properties[name];
               schema.properties[name] = propSchemaDef = {};
               propSchemaDef.title = name;
@@ -86,14 +86,14 @@
 
             function _data_changed(event) {
               var value = event.detail.value;
-              Object.keys(value).forEach(function (name, index) {
+              Object.keys(value).forEach(function(name, index) {
                 try {
                   element[name] = value[name];
                 } catch (e) {}
               });
             }
 
-          }, function (event) {
+          }, function(event) {
             // failure
           });
         }
