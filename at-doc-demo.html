@@ -55,32 +55,26 @@
             var domModule = importedContent.querySelector('dom-module');
             var elementName = domModule.getAttribute('id');
             var element = document.createElement(elementName);
-            element.label = elementName + ' demo';
             Polymer.dom(insertPoint).appendChild(element);
             // generate jsonSchema from properties
             var
               properties = element.properties,
+              propertyNames = Object.keys(properties),
               propDef,
               schema = {
                 title: elementName,
                 description: 'Demo form for ' + elementName,
                 properties: {}
               },
-              data = {},
               propSchemaDef = {};
 
-            Object.keys(properties).forEach(function(name, index) {
-              propDef = properties[name];
-              schema.properties[name] = propSchemaDef = {};
-              propSchemaDef.title = name;
-              propSchemaDef.type = typeof propDef.type();
-              data[name] = propDef.value;
-              if (name === 'label' && propDef.value === '') {
-                data[name] = element.label;
-              }
+            propertyNames.forEach(function(propName, index) {
+              propDef = properties[propName];
+              propSchemaDef = window.schemaHelpers.convertPolymerElementPropertyToAtCoreFormSchema(propName, propDef);
+              schema.properties[propName] = propSchemaDef;
             });
             coreForm.schema = schema;
-            coreForm.data = data;
+
             coreForm.removeEventListener('data-changed', _data_changed);
             coreForm.addEventListener('data-changed', _data_changed);
 
