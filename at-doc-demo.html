@@ -87,6 +87,16 @@
               });
             }
 
+            element.addEventListener('value-changed', function(event) {
+              var newValue = event.detail.value;
+              coreForm.updateFormElementData('value', newValue);
+            });
+
+            element.addEventListener('valid-changed', function(event) {
+              var newValue = event.detail.value;
+              coreForm.updateFormElementData('valid', newValue);
+            });
+
           }, function(event) {
             // failure
           });
