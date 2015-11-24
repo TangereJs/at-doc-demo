@@ -1,6 +1,6 @@
 <link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../at-core-theme/at-core-theme.html">
-<link rel="import" href="../at-core-form/at-core-form.html">
+<link rel="import" href="../at-core-propform/at-core-propform.html">
 
 <dom-module id="at-doc-demo">
   <style>
@@ -11,7 +11,7 @@
   <template>
     <div class="horizontal layout container">
       <div class="vertical layout flex-6">
-        <at-core-form id="coreForm"></at-core-form>
+        <at-core-propform id="coreForm"></at-core-propform>
       </div>
       <div id="insertPoint" class="vertical layout flex-6">
 
@@ -58,32 +58,15 @@
             var elementName = domModule.getAttribute('id');
             var element = document.createElement(elementName);
             Polymer.dom(insertPoint).appendChild(element);
-            // generate jsonSchema from properties
-            var
-              properties = element.properties,
-              propertyNames = Object.keys(properties),
-              propDef,
-              schema = {
-                title: elementName,
-                description: 'Demo form for ' + elementName,
-                properties: {}
-              },
-              propSchemaDef = {};
 
-            propertyNames.forEach(function(propName, index) {
-              propDef = properties[propName];
-              propSchemaDef = window.schemaHelpers.convertPolymerElementPropertyToAtCoreFormSchema(propName, propDef);
-              schema.properties[propName] = propSchemaDef;
-            });
-            coreForm.schema = schema;
-
+            coreForm.elementName = elementName;
             coreForm.removeEventListener('data-changed', _data_changed);
             coreForm.addEventListener('data-changed', _data_changed);
 
             function _data_changed(event) {
               var value = event.detail.value;
               var propertyNames = Object.keys(value);
-              schemaHelpers.copyProperties(propertyNames, [], value, element);              
+              schemaHelpers.copyProperties(propertyNames, [], value, element);
             }
 
             element.addEventListener('value-changed', function(event) {
