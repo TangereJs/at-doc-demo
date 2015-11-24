@@ -82,8 +82,8 @@
 
             function _data_changed(event) {
               var value = event.detail.value;
-              var propertyNames = Object.keys(value)
-              schemaHelpers.copyProperties(propertyNames, [], value, element);
+              var propertyNames = Object.keys(value);
+              schemaHelpers.copyProperties(propertyNames, [], value, element);              
             }
 
             element.addEventListener('value-changed', function(event) {
