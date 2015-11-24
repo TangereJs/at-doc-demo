@@ -4,9 +4,9 @@
 
 <dom-module id="at-doc-demo">
   <style>
-  .container{
-    margin: 5% 10%;
-  }
+    .container {
+      margin: 5% 10%;
+    }
   </style>
   <template>
     <div class="horizontal layout container">
@@ -82,11 +82,8 @@
 
             function _data_changed(event) {
               var value = event.detail.value;
-              Object.keys(value).forEach(function(name, index) {
-                try {
-                  element[name] = value[name];
-                } catch (e) {}
-              });
+              var propertyNames = Object.keys(value)
+              schemaHelpers.copyProperties(propertyNames, [], value, element);
             }
 
             element.addEventListener('value-changed', function(event) {
