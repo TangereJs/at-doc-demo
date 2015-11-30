@@ -74,7 +74,7 @@
             var element = document.createElement(elementName);
             Polymer.dom(insertPoint).appendChild(element);
 
-            coreForm.elementName = elementName;
+            coreForm.elementInstance = element;
             coreForm.removeEventListener('data-changed', _data_changed);
             coreForm.addEventListener('data-changed', _data_changed);
 
