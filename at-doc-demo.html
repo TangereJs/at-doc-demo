@@ -14,7 +14,7 @@
     }
 
     .content-wrapper {
-      width: 67%;
+      width: 50%;
     }
   </style>
   <template>
@@ -57,6 +57,10 @@
             this.url = newUrl;
           }
         }
+      },
+      resetResizeSensor: function() {
+        var coreForm = this.$.coreForm;
+        coreForm.resetResizeSensor();
       },
       urlChanged: function(newValue, oldValue) {
         var insertPoint = this.$.insertPoint;
