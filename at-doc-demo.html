@@ -24,8 +24,7 @@
       </div>
       <at-core-splitter direction="right"></at-core-splitter>
       <div class="vertical layout content-wrapper">
-        <div id="insertPoint">
-        </div>
+        <div id="insertPoint"></div>
       </div>
     </div>
   </template>
@@ -75,24 +74,6 @@
             Polymer.dom(insertPoint).appendChild(element);
 
             coreForm.elementInstance = element;
-            coreForm.removeEventListener('data-changed', _data_changed);
-            coreForm.addEventListener('data-changed', _data_changed);
-
-            function _data_changed(event) {
-              var value = event.detail.value;
-              var propertyNames = Object.keys(value);
-              schemaHelpers.copyProperties(propertyNames, [], value, element);
-            }
-
-            element.addEventListener('value-changed', function(event) {
-              var newValue = event.detail.value;
-              coreForm.updateFormElementData('value', newValue);
-            });
-
-            element.addEventListener('valid-changed', function(event) {
-              var newValue = event.detail.value;
-              coreForm.updateFormElementData('valid', newValue);
-            });
 
           }, function(event) {
             // failure
