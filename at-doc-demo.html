@@ -22,7 +22,7 @@
       <div class="flex">
         <at-core-propform id="coreForm"></at-core-propform>
       </div>
-      <at-core-splitter direction="right"></at-core-splitter>
+      <at-core-splitter id="atSplitter" direction="right"></at-core-splitter>
       <div class="vertical layout content-wrapper">
         <div id="insertPoint"></div>
       </div>
@@ -44,6 +44,11 @@
         }
       },
       _scopeCssViaAttr: true,
+      attached: function () {
+        var bodyHeight = document.body.getBoundingClientRect().height;
+        var atSplitter = this.$.atSplitter;
+        atSplitter.style['min-height'] = (bodyHeight-300) + 'px';
+      },
       ready: function() {
 
         if (this.auto && this.url === '') {
