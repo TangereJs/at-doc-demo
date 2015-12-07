@@ -20,7 +20,7 @@
   <template>
     <div class="container horizontal layout">
       <div class="flex">
-        <at-core-propform id="coreForm"></at-core-propform>
+        <at-core-propform id="coreForm" hide="{{hide}}"></at-core-propform>
       </div>
       <at-core-splitter id="atSplitter" direction="right"></at-core-splitter>
       <div class="vertical layout content-wrapper">
@@ -39,6 +39,10 @@
           observer: 'urlChanged'
         },
         auto: {
+          type: Boolean,
+          value: false
+        },
+        hide: {
           type: Boolean,
           value: false
         }
