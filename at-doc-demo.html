@@ -44,10 +44,12 @@
         },
         hide: {
           type: Boolean,
-          value: false
+          value: false,
+          observer: 'hideChanged'
         }
       },
       _scopeCssViaAttr: true,
+      lastElementName: '',
       attached: function () {
         var bodyHeight = document.body.getBoundingClientRect().height;
         var atSplitter = this.$.atSplitter;
@@ -79,7 +81,9 @@
             var importedContent = event.target.import;
             var domModule = importedContent.querySelector('dom-module');
             var elementName = domModule.getAttribute('id');
+            this.lastElementName = elementName;
             var element = document.createElement(elementName);
+            element.hide = true;
             Polymer.dom(insertPoint).appendChild(element);
 
             coreForm.elementInstance = element;
@@ -87,6 +91,13 @@
           }, function(event) {
             // failure
           });
+        }
+      },
+      hideChanged: function (newValue, oldValue) {
+        var insertPoint =  this.$.insertPoint;
+        if (this.lastElementName) {
+          var element = Polymer.dom(insertPoint).querySelector(this.lastElementName);
+          element.hide = Boolean(newValue);
         }
       }
     });
