@@ -98,6 +98,7 @@
         if (this.lastElementName) {
           var element = Polymer.dom(insertPoint).querySelector(this.lastElementName);
           element.hide = Boolean(newValue);
+          coreForm.updateFormElementData('hide', false);
         }
       }
     });
