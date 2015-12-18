@@ -75,12 +75,22 @@
       urlChanged: function(newValue, oldValue) {
         var insertPoint = this.$.insertPoint;
         var coreForm = this.$.coreForm;
+        var elementName = '';
+        // determine element name
+        if (this.url.indexOf('/') === -1) {
+          // url is of format at-*-*.html
+          // strip .html
+          elementName = this.url.replace('.html', '');
+        } else {
+          // url is of format ../at-*-*/at-*-*.html
+          // split for '/'
+          var parts = this.url.split('/');
+          var part = parts[1];
+          elementName = part;
+        }
         if (newValue !== '') {
           this.importHref(this.url, function(event) {
             // import successful
-            var importedContent = event.target.import;
-            var domModule = importedContent.querySelector('dom-module');
-            var elementName = domModule.getAttribute('id');
             this.lastElementName = elementName;
             var element = document.createElement(elementName);
             element.hide = true;
