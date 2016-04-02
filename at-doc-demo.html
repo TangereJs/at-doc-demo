@@ -107,8 +107,10 @@
         var insertPoint =  this.$.insertPoint;
         if (this.lastElementName) {
           var element = Polymer.dom(insertPoint).querySelector(this.lastElementName);
-          element.hide = Boolean(newValue);
-          coreForm.updateFormElementData('hide', false);
+          if (element.properties.hide !== undefined) {
+            element.hide = Boolean(newValue);
+            coreForm.updateFormElementData('hide', false);
+          }
         }
       }
     });
