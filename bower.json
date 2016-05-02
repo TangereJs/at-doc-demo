@@ -7,6 +7,6 @@
     "polymer": "Polymer/polymer#^1.0.0",
     "iron-flex-layout": "PolymerElements/iron-flex-layout#^1.0.0",
     "at-core-theme": "TangereJs/at-core-theme#0.8-preview",
-    "at-core-form": "TangereJs/at-core-form#0.8-preview",
+    "at-core-form": "TangereJs/at-core-form#0.8-preview"
   }
 }
