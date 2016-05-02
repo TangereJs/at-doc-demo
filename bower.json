@@ -3,9 +3,9 @@
   "private": true,
   "version": "1.0.0",
   "dependencies": {
-    "webcomponentsjs": "Polymer/webcomponentsjs#^1.0.0",
-    "polymer": "Polymer/polymer#^1.0.0",
-    "iron-flex-layout": "PolymerElements/iron-flex-layout#^1.0.0",
+    "webcomponentsjs": "Polymer/webcomponentsjs#master",
+    "polymer": "Polymer/polymer#master",
+    "iron-flex-layout": "PolymerElements/iron-flex-layout#master",
     "at-core-theme": "TangereJs/at-core-theme#0.8-preview",
     "at-core-form": "TangereJs/at-core-form#0.8-preview"
   }
