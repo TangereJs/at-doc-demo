@@ -67,6 +67,11 @@
             this.url = newUrl;
           }
         }
+
+        var coreForm = this.$.coreForm.$.propForm;
+        coreForm.addEventListener('rendered', function(event) {
+          coreForm.updateFormElementData('hide', false);
+        });
       },
       resetResizeSensor: function() {
         var coreForm = this.$.coreForm;
@@ -97,7 +102,6 @@
             Polymer.dom(insertPoint).appendChild(element);
 
             coreForm.elementInstance = element;
-
           }, function(event) {
             // failure
           });
@@ -109,7 +113,7 @@
           var element = Polymer.dom(insertPoint).querySelector(this.lastElementName);
           if (element.properties.hide !== undefined) {
             element.hide = Boolean(newValue);
-            coreForm.updateFormElementData('hide', false);
+            this.$.coreForm.updateFormElementData('hide', false);
           }
         }
       }
