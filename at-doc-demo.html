@@ -94,17 +94,28 @@
           elementName = part;
         }
         if (newValue !== '') {
-          this.importHref(this.url, function(event) {
-            // import successful
-            this.lastElementName = elementName;
+          var alreadyImported = Polymer.telemetry.registrations.find(function (element, index) {
+            return element.is === elementName;
+          });
+          if (!alreadyImported) {
+            this.importHref(this.url, function(event) {
+              // import successful
+              this.lastElementName = elementName;
+              var element = document.createElement(elementName);
+              element.hide = true;
+              Polymer.dom(insertPoint).appendChild(element);
+
+              coreForm.elementInstance = element;
+            }, function(event) {
+              // failure
+            }, true);
+          } else {
             var element = document.createElement(elementName);
             element.hide = true;
             Polymer.dom(insertPoint).appendChild(element);
 
             coreForm.elementInstance = element;
-          }, function(event) {
-            // failure
-          });
+          }
         }
       },
       hideChanged: function (newValue, oldValue) {
@@ -112,7 +123,7 @@
         if (this.lastElementName) {
           var element = Polymer.dom(insertPoint).querySelector(this.lastElementName);
           if (element.properties.hide !== undefined) {
-            element.hide = Boolean(newValue);
+            element.hide = newValue;
             this.$.coreForm.updateFormElementData('hide', false);
           }
         }
