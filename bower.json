@@ -3,10 +3,10 @@
   "private": true,
   "version": "1.0.0",
   "dependencies": {
-    "tangere": "TangereJs/tangere#0.8-preview",
+    "tangere": "TangereJs/tangere#master",
     "iron-flex-layout": "PolymerElements/iron-flex-layout#master",
-    "at-theme": "TangereJs/at-theme#0.8-preview",
-    "at-core-splitter": "TangereJs/at-core-splitter#0.8-preview",
-    "at-core-propform": "TangereJs/at-core-propform#0.8-preview"
+    "at-theme": "TangereJs/at-theme#master",
+    "at-core-splitter": "TangereJs/at-core-splitter#master",
+    "at-core-propform": "TangereJs/at-core-propform#master"
   }
 }
