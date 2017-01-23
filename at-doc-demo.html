@@ -21,7 +21,7 @@
   <template>
     <div class="container horizontal layout">
       <div class="flex">
-        <at-core-propform id="coreForm" hide="{{hide}}" title-mode="propertyName"></at-core-propform>
+        <at-core-propform id="coreForm" title-mode="propertyName"></at-core-propform>
       </div>
       <at-core-splitter id="atSplitter" direction="right"></at-core-splitter>
       <div class="vertical layout content-wrapper">
@@ -119,12 +119,13 @@
         }
       },
       hideChanged: function (newValue, oldValue) {
+        this.$.coreForm.hide = newValue;
+
         var insertPoint =  this.$.insertPoint;
         if (this.lastElementName) {
           var element = Polymer.dom(insertPoint).querySelector(this.lastElementName);
           if (element.properties.hide !== undefined) {
             element.hide = newValue;
-            this.$.coreForm.updateFormElementData('hide', false);
           }
         }
       }
