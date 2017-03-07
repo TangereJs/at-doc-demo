@@ -119,8 +119,7 @@
         }
       },
       hideChanged: function (newValue, oldValue) {
-        this.$.coreForm.hide = newValue;
-
+        this.$.coreForm.updateFormElementData('hide', newValue);
         var insertPoint =  this.$.insertPoint;
         if (this.lastElementName) {
           var element = Polymer.dom(insertPoint).querySelector(this.lastElementName);
