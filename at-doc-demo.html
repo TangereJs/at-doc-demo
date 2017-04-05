@@ -120,11 +120,18 @@
       },
       hideChanged: function (newValue, oldValue) {
         this.$.coreForm.updateFormElementData('hide', newValue);
+        // this refresh will refresh at-form-codemirror instances that are on prop-form
+        this.$.coreForm.refresh();
+
         var insertPoint =  this.$.insertPoint;
         if (this.lastElementName) {
           var element = Polymer.dom(insertPoint).querySelector(this.lastElementName);
           if (element.properties.hide !== undefined) {
             element.hide = newValue;
+          }
+          // this refresh will refresh at-form-codemirror instance that is in the right column
+          if (element.refresh) {
+            element.refresh();
           }
         }
       }
