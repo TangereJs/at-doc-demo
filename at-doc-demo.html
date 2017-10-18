@@ -94,9 +94,7 @@
           elementName = part;
         }
         if (newValue !== '') {
-          var alreadyImported = Polymer.telemetry.registrations.find(function (element, index) {
-            return element.is === elementName;
-          });
+          var alreadyImported = this._findInArray(Polymer.telemetry.registrations, 'is', elementName);          
           if (!alreadyImported) {
             this.importHref(this.url, function(event) {
               // import successful
@@ -134,6 +132,17 @@
             element.refresh();
           }
         }
+      },
+
+      _findInArray: function(arr, propName, propValue) {
+        var found = undefined;
+
+        for (var i = 0; i < arr.length && !found; i++) {
+          var curr = arr[i];
+          found = curr[propName] === propValue ? curr : undefined;
+        }
+
+        return found;
       }
     });
   </script>
