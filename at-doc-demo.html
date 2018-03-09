@@ -1,12 +1,11 @@
 <link rel="import" href="../tangere/tangere.html">
-<link rel="import" href="../iron-flex-layout/classes/iron-flex-layout.html">
-<link rel="import" href="../at-theme/at-theme.html">
+<link rel="import" href="../at-core-style-classes/at-core-style-classes.html" />
 <link rel="import" href="../at-core-splitter/at-core-splitter.html">
 <link rel="import" href="../at-core-propform/at-core-propform.html">
 
 <dom-module id="at-doc-demo">
   <template>
-    <style>
+    <style include="at-core-style-classes">
       .container {
         margin: 32px;
       }
@@ -19,12 +18,12 @@
         width: 50%;
       }
     </style>
-    <div class="container horizontal layout">
-      <div class="flex">
+    <div class="container layout-horizontal">
+      <div class="layout-flex">
         <at-core-propform id="coreForm" title-mode="propertyName"></at-core-propform>
       </div>
       <at-core-splitter id="atSplitter" direction="right"></at-core-splitter>
-      <div class="vertical layout content-wrapper">
+      <div class="layout-vertical content-wrapper">
         <div id="insertPoint"></div>
       </div>
     </div>
@@ -94,7 +93,7 @@
           elementName = part;
         }
         if (newValue !== '') {
-          var alreadyImported = this._findInArray(Polymer.telemetry.registrations, 'is', elementName);          
+          var alreadyImported = this._findInArray(Polymer.telemetry.registrations, 'is', elementName);
           if (!alreadyImported) {
             this.importHref(this.url, function(event) {
               // import successful
